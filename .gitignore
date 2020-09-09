@@ -1,0 +1,5 @@
+.vercel
+node_modules
+data
+log
+package-lock.json
