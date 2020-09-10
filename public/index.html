@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cdg.sh</title>
+    <title>proxx.xyz</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>cdg.sh - Short URLs for your code garden.</h1>
+        <h1>proxx.xyz - Short URLs for your code projects.</h1>
+        <img class="logo" src="">
     </header>
+    <form class="form" v-if="formVisible" @submit.prevent="createUrl()">
+        <div class="error"></div>
+        <input class="input" type="text" v-model="url" name="url" placeholder="enter a url">
+        <input class="input" type="text" v-model="slug" name="slug" placeholder="enter a slug">
+        <button type="submit" class="create">create</button>
+    </form>
+        <div class="created"></div>
+    <script src="app.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 {
-  "name": "url-shorten",
+  "name": "proxx.xyz",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,14 +9,18 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Christopher Scott",
+  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-rate-limit": "^5.1.3",
+    "express-slow-down": "^1.3.1",
     "helmet": "^4.1.0",
+    "mongodb": "^3.6.1",
     "monk": "^7.3.2",
     "morgan": "^1.10.0",
+    "nanoid": "^3.1.12",
     "yup": "^0.29.3"
   },
   "devDependencies": {
