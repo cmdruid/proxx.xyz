@@ -1,3 +1,4 @@
+// Package Imports
 const express = require('express');
 const monk = require('monk');
 const helmet = require('helmet');
@@ -5,24 +6,30 @@ const yup = require('yup');
 const { nanoid } = require('nanoid');
 const rateLimit = require('express-rate-limit');
 const slowDown = require('express-slow-down');
-const { static } = require('express');
 
+
+// Environment Configuration
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
+
+// MongoDB Connection
 const db = monk(process.env.MONGODB_URI);
 db.then(() => { console.log('Connection success!') }).catch((e)=> { console.error('Error !', e); });
 
+
+// MongoDB Configuration
 const urls = db.get('urls');
 urls.createIndex({ slug: 1 }, { unique: true });
 
+
+// Express App Configuration
 const app = express();
 app.enable('trust proxy');
 app.use(helmet());
 app.use(express.json());
-app.use(express.static('public'));
 
-// app.get('/', (req, res) => { return res.redirect('404'); });
 
+// GET Routes
 app.get('/path', (req, res) => {
     return res.json({ dir: __dirname });
 })
@@ -40,11 +47,15 @@ app.get('/:id', async (req, res) => {
     return res.redirect(url.url);
 });
 
+
+// Validation Schema
 const schema = yup.object().shape({
     slug: yup.string().trim().matches(/^[\w\-]+$/i),
     url: yup.string().trim().url().required(),
 })
 
+
+// POST Routes
 app.post('/url', slowDown({
     windowMs: 30 * 1000,
     delayAfter: 1,
@@ -87,6 +98,7 @@ app.use((err, req, res, next) => {
 });
 
 
+// Express Listener
 const port = process.env.PORT || 1337;
 
 app.listen(port, () => {

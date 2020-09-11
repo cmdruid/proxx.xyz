@@ -1,7 +1,7 @@
 {
   "name": "proxx.xyz",
   "version": "1.0.0",
-  "description": "",
+  "description": "Short URLs for your code projects.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
