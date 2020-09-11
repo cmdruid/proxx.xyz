@@ -1,5 +1,7 @@
+.vscode
 .vercel
+.vercelignore
+vercel.json
+.env
 node_modules
-data
-log
 package-lock.json

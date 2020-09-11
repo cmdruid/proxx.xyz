@@ -1,11 +1,11 @@
-const host    = 'https://proxxxyz.herokuapp.com',
+const { protocol, host } = window.location,
       form    = document.querySelector('form'),
       error   = document.querySelector('.error'),
       created = document.querySelector('.created');
 
-const { protocol, host } = window.location;
-console.log(protocol, host);
 error.style.display = 'none';
+console.log(protocol, host);
+
 form.addEventListener('submit', async (e) => {
 
     e.preventDefault();
@@ -20,7 +20,7 @@ form.addEventListener('submit', async (e) => {
         body: JSON.stringify({ url: url, slug: slug || undefined })
     };
 
-    const response = await fetch(`${host}/url`, options);
+    const response = await fetch(`${protocol}//${host}/url`, options);
     if (response.status === 429) displayError('You are sending too many requests. Try again in 30 seconds.');
 
     const result = await response.json();
@@ -35,7 +35,7 @@ function displayError(msg) {
 
 function displaySlug(slug) {
     const content  = document.createElement('p'),
-          shorturl = `https://proxx.xyz/${slug}`;
+          shorturl = `${protocol}//${host}/${slug}`;
 
     form.style.display  = 'none';
     error.style.display = 'none';

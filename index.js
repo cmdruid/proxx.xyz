@@ -1,14 +1,11 @@
-const path = require('path');
 const express = require('express');
-const cors = require('cors');
-const mongo = require('mongodb');
 const monk = require('monk');
-const morgan = require('morgan');
 const helmet = require('helmet');
 const yup = require('yup');
 const { nanoid } = require('nanoid');
 const rateLimit = require('express-rate-limit');
 const slowDown = require('express-slow-down');
+const { static } = require('express');
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
@@ -20,24 +17,27 @@ urls.createIndex({ slug: 1 }, { unique: true });
 
 const app = express();
 app.enable('trust proxy');
-
-app.use(cors());
 app.use(helmet());
-app.use(morgan('common'));
 app.use(express.json());
-app.use(express.static('./public'));
+app.use(express.static('public'));
 
-const notFoundPath = path.join(__dirname, 'public/404.html');
+// app.get('/', (req, res) => { return res.redirect('404'); });
+
+app.get('/path', (req, res) => {
+    return res.json({ dir: __dirname });
+})
 
 app.get('/:id', async (req, res) => {
 
     const { id: slug } = req.params;
-    try {
-        const url = await urls.findOne({ slug });
-        if (url) res.redirect(url.url);
-        return res.status(404).sendFile(notFoundPath);
-    } catch (err) { res.status(404).sendFile(notFoundPath); };
 
+    if (!slug) return res.json(req.params);
+
+    const url = await urls.findOne({ slug });
+
+    if (!url) return res.status(404).redirect('404');
+    
+    return res.redirect(url.url);
 });
 
 const schema = yup.object().shape({
@@ -90,5 +90,5 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 1337;
 
 app.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}`);
+    console.log(`Listening on port: ${port}`);
 });
