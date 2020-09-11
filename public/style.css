@@ -18,10 +18,16 @@ body {
 }
 
 header {
-    display: flex;
+    text-align: center;
+    line-height: 2rem;
     justify-content: center;
     margin-bottom: 3rem;
     color: white;
+}
+
+h1 {
+    font-size: 4rem;
+    margin-bottom: 2.5rem;
 }
 
 .logo {
@@ -93,4 +99,3 @@ header {
 .created a {
     color: inherit;
 }
-  

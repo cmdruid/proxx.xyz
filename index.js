@@ -21,6 +21,7 @@ urls.createIndex({ slug: 1 }, { unique: true });
 const app = express();
 app.enable('trust proxy');
 
+app.use(cors());
 app.use(helmet());
 app.use(morgan('common'));
 app.use(express.json());
